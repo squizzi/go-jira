@@ -1,12 +1,14 @@
 package jira
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/url"
+	"os"
 	"path"
+	"regexp"
+	"strings"
 )
 
 func readJSON(input io.Reader, data interface{}) error {
@@ -15,12 +17,16 @@ func readJSON(input io.Reader, data interface{}) error {
 		return err
 	}
 	if len(content) == 0 {
-		return nil
+		os.Exit(0)
 	}
-	err = json.Unmarshal(content, data)
-	if err != nil {
-		return fmt.Errorf("JSON Parse Error: %s from %q", err, content)
+	re := regexp.MustCompile(`issues\/\d*`)
+	match := re.FindString(string(content))
+	if len(match) == 0 {
+		os.Exit(0)
 	}
+	matches := strings.Split(match, "/")
+	fmt.Println(matches[1])
+	os.Exit(0)
 	return nil
 }
 

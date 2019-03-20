@@ -59,7 +59,7 @@ func GetIssue(ua HttpClient, endpoint string, issue string, iqg IssueQueryProvid
 	if iqg != nil {
 		query = iqg.ProvideIssueQueryString()
 	}
-	uri := URLJoin(endpoint, "rest/api/2/issue", issue)
+	uri := URLJoin(endpoint, "rest/api/2/issue", issue, "/remotelink")
 	uri += query
 	resp, err := ua.GetJSON(uri)
 	if err != nil {

@@ -1,6 +1,7 @@
 package jiracmd
 
 import (
+	"fmt"
 	"github.com/coryb/figtree"
 	"github.com/coryb/oreo"
 	"gopkg.in/Netflix-Skunkworks/go-jira.v1"
@@ -50,9 +51,7 @@ func CmdView(o *oreo.Client, globals *jiracli.GlobalOptions, opts *ViewOptions) 
 	if err != nil {
 		return err
 	}
-	if err := opts.PrintTemplate(data); err != nil {
-		return err
-	}
+	fmt.Printf("%v", data)
 	if opts.Browse.Value {
 		return CmdBrowse(globals, opts.Issue)
 	}
